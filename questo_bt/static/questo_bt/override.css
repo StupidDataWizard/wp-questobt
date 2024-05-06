@@ -1,0 +1,25 @@
+{% load static %}
+
+@font-face {
+    font-family: Immortal;
+    src: url({% static 'questo_bt/IMMORTAL.ttf' %});
+}
+
+body {
+    background-image: url('questo_bt.jpg');
+    background-size:cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;    
+    font-family: Immortal, 'Times New Roman', Times, serif;
+}
+
+.custom {
+    background-color: #212429;
+    display:flex;
+    flex-wrap: wrap;
+    width: 540px;
+    margin:auto;
+    box-shadow: 14px 11px 37px 16px rgba(252,235,131,1.000);
+    border-radius: 20px 20px 20px 20px;
+}

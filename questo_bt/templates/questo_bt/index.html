@@ -1,0 +1,69 @@
+{% extends 'questo_bt/base.html' %}
+{% load static %}
+
+{% block title %}Questo{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-5 pb-1 bg-dark text-white text-center">
+    <h1>Questo</h1>
+    <p>aka a childish To-Do List</p>
+</div>
+<div class="container-fluid bg-dark text-white text-center mb-5 pb-3">
+    <form action="{% url 'questo_bt:filter_quests' %}" method="POST">
+        {% csrf_token %}
+        <a href="{% url 'questo_bt:solved_quests' %}" class="btn btn-outline-light pt-1 pb-1">Archiv</a>
+        <select class="btn btn-outline-light" name="priority">
+            <option value="S">Tag</option>
+            <option value="A">Woche</option>
+            <option value="B">Monat</option>
+        </select>
+        <input type="submit" value="filtern..." class="btn btn-outline-light pt-1 pb-1">
+    </form>
+</div>
+<div class="custom">
+    <table class="table table-dark table-striped p-5 m-3">
+        <tr>
+            <th>Quest</th>
+            <th>Progress</th>
+            <th>Priority</th>
+            <th></th>
+        </tr>
+        {% if quests %}
+        {% for quest in quests %}
+        <tr>
+            <td>
+                <a class="text-decoration-none text-white" href="{% url 'questo_bt:detail' quest.id %}">{{quest.text}}</a>
+            </td>
+            <td>{{quest.status_translation}}</td>
+            <td>{{quest.priority_translation}}</td>
+            <td>
+                <form action="{% url 'questo_bt:delete_quest' quest.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Löschen" class="btn btn-outline-danger">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">
+                keine Quests...
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <div class="container-sm text-white m-3">
+        <form action="{% url 'questo_bt:add_quest' %}" method="POST">
+            {% csrf_token %}
+            <label for="Aufgaben">Quest: </label>
+            <input type="text" value="" id="text" name="text" class="form-control mt-2" placeholder="neue Quest...">
+            <select class="btn btn-outline-light mt-3" name="priority">
+                <option value="S">S-Rank</option>
+                <option value="A">A-Rank</option>
+                <option value="B">B-Rank</option>
+            </select>
+            <input type="submit" value="Quest hinzufügen" class="btn btn-outline-light mt-3">
+        </form>
+    </div>
+</div>
+{% endblock %}

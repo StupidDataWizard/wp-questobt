@@ -1,0 +1,44 @@
+{% extends 'questo_bt/base.html' %}
+{% load static %}
+
+{% block title %}Quest-Details{% endblock %}
+{% block content %}
+<div class="container-fluid p-5 bg-dark text-white text-center">
+    <h1>{{quest.text}}</h1>
+</div>
+<div class="custom mb-5 mt-5">
+    <table class="table table-dark table-striped mt-3 mx-3">
+        <tr>
+            <th class="h4">Status: <span class="text-warning">{{quest.status_translation}}</span></th>
+            <th class="h4">Fällig: <span class="text-warning">{{quest.priority_translation}}</span></th>
+        </tr>
+        <tr>
+            <td>
+                <form action="{% url 'questo_bt:update_status' quest.id %}" method="POST">
+                    {% csrf_token %}
+                    <select class="btn btn-outline-light" name="status">
+                        <option value="T">Zu tun</option>
+                        <option value="D">Erledigt</option>
+                        <option value="C">Canceln</option>
+                    </select>
+                    <input class="btn btn-outline-warning" type="submit" value="Ändern">
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'questo_bt:update_priority' quest.id %}" method="POST">
+                    {% csrf_token %}
+                    <select class="btn btn-outline-light" name="priority">
+                        <option value="S">Heute</option>
+                        <option value="A">Diese Woche</option>
+                        <option value="B">Diesen Monat</option>
+                    </select>
+                    <input class="btn btn-outline-warning" type="submit" value="Ändern">
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <a href="{% url 'questo_bt:index' %}" class="btn btn-outline-light mb-3 mx-3">Return to Questo</a>
+    </div>
+</div>
+{% endblock %}

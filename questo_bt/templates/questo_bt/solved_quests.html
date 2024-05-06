@@ -1,0 +1,38 @@
+{% extends 'questo_bt/base.html' %}
+{% load static %}
+
+{% block title %}Archiv (Solved Quests){% endblock %}
+
+{% block content %}
+<div class="container-fluid p-5 bg-dark text-white text-center">
+    <h1>Archiv</h1>
+</div>
+<div class="custom mb-5 mt-5">
+    <table class="table table-dark table-striped p-5 m-3">
+        <tr>
+            <th>Quest</th>
+            <th>Progress</th>
+            <th>Priority</th>
+        </tr>
+        {% if solved_quests %}
+        {% for quest in solved_quests %}
+        <tr>
+            <td>
+                <a class="text-decoration-none text-white" href="{% url 'questo_bt:detail' quest.id %}">{{quest.text}}</a>
+            </td>
+            <td>{{quest.status_translation}}</td>
+            <td>{{quest.priority_translation}}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">
+                keine Quests...
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <div>
+        <a href="{% url 'questo_bt:index' %}" class="btn btn-outline-light mb-3 mx-3">Return to Questo</a>
+    </div>
+{% endblock %}
